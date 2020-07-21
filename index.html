@@ -6,10 +6,9 @@
                 <script src="/ckfinder/ckfinder.js"></script>
         </head>
         <body>
-                <textarea id="content" class="ckeditor"></textarea>
+                <textarea name="editor1"></textarea>
                 <script>
-                 $(".ckeditor").each(function(){
-                   CKEDITOR.replace( 'this.id', {
+                   CKEDITOR.replace( 'editor1', {
                     filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
                     filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?type=Images',
                     filebrowserUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
