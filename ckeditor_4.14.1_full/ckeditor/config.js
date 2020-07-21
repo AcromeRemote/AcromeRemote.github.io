@@ -4,7 +4,11 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
+	//CKFinder.setupCKEditor();
+	//CKEDITOR.replace( 'editor1' );
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
+	//var editor = CKEDITOR.replace( 'editor1' );
+	//CKFinder.setupCKEditor( editor );
 };
