@@ -2,16 +2,16 @@
         <head>
                 <meta charset="utf-8">
                 <title>CKEditor</title>
-                <script src="/ckeditor_4.14.1_full/ckeditor/ckeditor.js"></script>
-                <script src="/ckfinder/ckfinder.js"></script>
+                <script src="./ckeditor_4.14.1_full/ckeditor/ckeditor.js"></script>
+                <script src="./ckfinder/ckfinder.js"></script>
         </head>
         <body>
                 <textarea name="editor1"></textarea>
                 <script>
 			CKEDITOR.replace('editor1', {
       			// Configure your file manager integration. This example uses CKFinder 3 for PHP.
-			      filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
-			      filebrowserUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files'
+			      filebrowserBrowseUrl: './ckfinder/ckfinder.html',
+			      filebrowserUploadUrl: './ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files'
 			});
                 </script>
         </body>
