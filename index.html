@@ -2,18 +2,18 @@
         <head>
                 <meta charset="utf-8">
                 <title>Acrome RemoteLAb</title>
-                <script src="ckeditor_4.14.1_full/ckeditor/ckeditor.js"></script>
-                <script src="ckfinder/ckfinder.js"></script>
+                <script src="/ckeditor_4.14.1_full/ckeditor/ckeditor.js"></script>
+                <script src="/ckfinder/ckfinder.js"></script>
         </head>
         <body>
                 <textarea id="content" class="ckeditor"></textarea>
                 <script>
                  $(".ckeditor").each(function(){
                    CKEDITOR.replace( 'this.id', {
-                    filebrowserBrowseUrl: 'ckfinder/ckfinder.html',
-                    filebrowserImageBrowseUrl: 'ckfinder/ckfinder.html?type=Images',
-                    filebrowserUploadUrl: 'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
-                    filebrowserImageUploadUrl: 'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+                    filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+                    filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?type=Images',
+                    filebrowserUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                    filebrowserImageUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
                     language : "en"
                    });
                  });
