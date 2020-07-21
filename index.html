@@ -8,13 +8,17 @@
         <body>
                 <textarea name="editor1"></textarea>
                 <script>
-			CKEDITOR.replace('editor1', {
-      			// Configure your file manager integration. This example uses CKFinder 3 for PHP.
-			     filebrowserBrowseUrl       : '/ckfinder/ckfinder.html',
-			     filebrowserImageBrowseUrl  : '/ckfinder/ckfinder.html?type=Images',
-			     filebrowserUploadUrl       : '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&currentFolder=/archive/',
-			     filebrowserImageUploadUrl  : '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&currentFolder=/cars/'
-			});
+			var editor = CKEDITOR.replace( 'editor1' );
+			CKFinder.setupCKEditor( editor, {
+			    skin: 'jquery-mobile',
+			    swatch: 'b',
+			    onInit: function( finder ) {
+				finder.on( 'files:choose', function( evt ) {
+				    var file = evt.data.files.first();
+				    console.log( 'Selected: ' + file.get( 'name' ) );
+				} );
+			    }
+			} );
                 </script>
         </body>
 </html>
