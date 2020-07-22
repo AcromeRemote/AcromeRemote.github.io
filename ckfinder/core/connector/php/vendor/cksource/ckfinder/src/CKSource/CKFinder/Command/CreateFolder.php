@@ -3,8 +3,8 @@
 /*
  * CKFinder
  * ========
- * https://ckeditor.com/ckfinder/
- * Copyright (c) 2007-2020, CKSource - Frederico Knabben. All rights reserved.
+ * http://cksource.com/ckfinder
+ * Copyright (C) 2007-2016, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -25,7 +25,7 @@ class CreateFolder extends CommandAbstract
 {
     protected $requestMethod = Request::METHOD_POST;
 
-    protected $requires = [Permission::FOLDER_CREATE];
+    protected $requires = array(Permission::FOLDER_CREATE);
 
     public function execute(Request $request, WorkingFolder $workingFolder, EventDispatcher $dispatcher)
     {
@@ -33,16 +33,15 @@ class CreateFolder extends CommandAbstract
 
         $createFolderEvent = new CreateFolderEvent($this->app, $workingFolder, $newFolderName);
 
-        $dispatcher->dispatch($createFolderEvent, CKFinderEvent::CREATE_FOLDER);
+        $dispatcher->dispatch(CKFinderEvent::CREATE_FOLDER, $createFolderEvent);
 
         $created = false;
-        $createdFolderName = null;
 
         if (!$createFolderEvent->isPropagationStopped()) {
             $newFolderName = $createFolderEvent->getNewFolderName();
-            list($createdFolderName, $created) = $workingFolder->createDir($newFolderName);
+            $created = $workingFolder->createDir($newFolderName);
         }
 
-        return ['newFolder' => $createdFolderName, 'created' => (int) $created];
+        return array('newFolder' => $newFolderName, 'created' => (int) $created);
     }
 }

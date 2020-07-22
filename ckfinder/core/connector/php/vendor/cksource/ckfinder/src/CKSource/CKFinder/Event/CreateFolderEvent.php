@@ -3,8 +3,8 @@
 /*
  * CKFinder
  * ========
- * https://ckeditor.com/ckfinder/
- * Copyright (c) 2007-2020, CKSource - Frederico Knabben. All rights reserved.
+ * http://cksource.com/ckfinder
+ * Copyright (C) 2007-2016, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -25,7 +25,7 @@ class CreateFolderEvent extends CKFinderEvent
     /**
      * The working folder where the new folder is going to be created.
      *
-     * @var WorkingFolder
+     * @var WorkingFolder $workingFolder
      */
     protected $workingFolder;
 
@@ -39,7 +39,9 @@ class CreateFolderEvent extends CKFinderEvent
     /**
      * Constructor.
      *
-     * @param string $newFolderName
+     * @param CKFinder      $app
+     * @param WorkingFolder $workingFolder
+     * @param string        $newFolderName
      */
     public function __construct(CKFinder $app, WorkingFolder $workingFolder, $newFolderName)
     {

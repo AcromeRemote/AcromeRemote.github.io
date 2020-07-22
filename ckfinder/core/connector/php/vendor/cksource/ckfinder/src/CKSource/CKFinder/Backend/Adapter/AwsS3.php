@@ -3,8 +3,8 @@
 /*
  * CKFinder
  * ========
- * https://ckeditor.com/ckfinder/
- * Copyright (c) 2007-2020, CKSource - Frederico Knabben. All rights reserved.
+ * http://cksource.com/ckfinder
+ * Copyright (C) 2007-2016, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -17,7 +17,7 @@ namespace CKSource\CKFinder\Backend\Adapter;
 use CKSource\CKFinder\CKFinder;
 use CKSource\CKFinder\ContainerAwareInterface;
 use CKSource\CKFinder\Operation\OperationManager;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\AwsS3v2\AwsS3Adapter;
 use League\Flysystem\Util\MimeType;
 
 /**
@@ -32,6 +32,9 @@ class AwsS3 extends AwsS3Adapter implements ContainerAwareInterface, EmulateRena
      */
     protected $app;
 
+    /**
+     * @param CKFinder $app
+     */
     public function setContainer(CKFinder $app)
     {
         $this->app = $app;
@@ -47,9 +50,9 @@ class AwsS3 extends AwsS3Adapter implements ContainerAwareInterface, EmulateRena
      */
     public function renameDirectory($path, $newPath)
     {
-        $sourcePath = $this->applyPathPrefix(rtrim($path, '/').'/');
+        $sourcePath = $this->applyPathPrefix(rtrim($path, '/') . '/');
 
-        $objectsIterator = $this->s3Client->getIterator('ListObjects', [
+        $objectsIterator = $this->client->getIterator('listObjects', [
             'Bucket' => $this->bucket,
             'Prefix' => $sourcePath,
         ]);
@@ -59,67 +62,38 @@ class AwsS3 extends AwsS3Adapter implements ContainerAwareInterface, EmulateRena
         });
 
         if (!empty($objects)) {
-            /** @var OperationManager $operation */
+
+            /* @var OperationManager $operation */
             $operation = $this->app['operation'];
 
             $operation->start();
 
-            $total = \count($objects);
+            $total = count($objects);
             $current = 0;
 
             foreach ($objects as $entry) {
-                $this->s3Client->copyObject([
-                    'Bucket' => $this->bucket,
-                    'Key' => $this->replacePath($entry['Key'], $path, $newPath),
-                    'CopySource' => urlencode($this->bucket.'/'.$entry['Key']),
-                ]);
+                $this->client->copyObject(array(
+                    'Bucket'     => $this->bucket,
+                    'Key'        => $this->replacePath($entry['Key'], $path, $newPath),
+                    'CopySource' => urlencode($this->bucket . '/' . $entry['Key']),
+                ));
 
                 if ($operation->isAborted()) {
                     // Delete target folder in case if operation was aborted
-                    $targetPath = $this->applyPathPrefix(rtrim($newPath, '/').'/');
+                    $targetPath = $this->applyPathPrefix(rtrim($newPath, '/') . '/');
 
-                    $this->s3Client->deleteMatchingObjects($this->bucket, $targetPath);
+                    $this->client->deleteMatchingObjects($this->bucket, $targetPath);
 
                     return true;
                 }
 
-                $operation->updateStatus(['total' => $total, 'current' => ++$current]);
+                $operation->updateStatus(array('total' => $total, 'current' => ++$current));
             }
 
-            $this->s3Client->deleteMatchingObjects($this->bucket, $sourcePath);
+            $this->client->deleteMatchingObjects($this->bucket, $sourcePath);
         }
 
         return true;
-    }
-
-    /**
-     * Returns a direct link to a file stored on S3.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function getFileUrl($path)
-    {
-        $objectPath = $this->applyPathPrefix($path);
-
-        return $this->s3Client->getObjectUrl($this->bucket, $objectPath);
-    }
-
-    /**
-     * Returns the file MIME type.
-     *
-     * @param string $path
-     *
-     * @return null|array|false|string
-     */
-    public function getMimeType($path)
-    {
-        $ext = pathinfo($path, PATHINFO_EXTENSION);
-
-        $mimeType = MimeType::detectByFileExtension(strtolower($ext));
-
-        return $mimeType ? ['mimetype' => $mimeType] : parent::getMimetype($path);
     }
 
     /**
@@ -134,9 +108,39 @@ class AwsS3 extends AwsS3Adapter implements ContainerAwareInterface, EmulateRena
     protected function replacePath($objectPath, $path, $newPath)
     {
         $objectPath = $this->removePathPrefix($objectPath);
-        $newPath = trim($newPath, '/').'/';
-        $path = trim($path, '/').'/';
+        $newPath = trim($newPath, '/') . '/';
+        $path = trim($path, '/') . '/';
 
-        return $this->applyPathPrefix($newPath.substr($objectPath, \strlen($path)));
+        return $this->applyPathPrefix($newPath . substr($objectPath, strlen($path)));
+    }
+
+    /**
+     * Returns a direct link to a file stored on S3.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getFileUrl($path)
+    {
+        $objectPath = $this->applyPathPrefix($path);
+
+        return $this->client->getObjectUrl($this->bucket, $objectPath);
+    }
+
+    /**
+     * Returns the file MIME type.
+     *
+     * @param string $path
+     *
+     * @return array|false|null|string
+     */
+    public function getMimeType($path)
+    {
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+        $mimeType = MimeType::detectByFileExtension($ext);
+
+        return $mimeType ? array('mimetype' => $mimeType) : parent::getMimetype($path);
     }
 }

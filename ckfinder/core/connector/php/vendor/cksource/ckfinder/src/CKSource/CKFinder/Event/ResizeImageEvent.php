@@ -3,8 +3,8 @@
 /*
  * CKFinder
  * ========
- * https://ckeditor.com/ckfinder/
- * Copyright (c) 2007-2020, CKSource - Frederico Knabben. All rights reserved.
+ * http://cksource.com/ckfinder
+ * Copyright (C) 2007-2016, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -27,6 +27,10 @@ class ResizeImageEvent extends CKFinderEvent
      */
     protected $resizedImage;
 
+    /**
+     * @param CKFinder             $app
+     * @param ResizedImageAbstract $resizedImage
+     */
     public function __construct(CKFinder $app, ResizedImageAbstract $resizedImage)
     {
         parent::__construct($app);
@@ -46,6 +50,8 @@ class ResizeImageEvent extends CKFinderEvent
 
     /**
      * Sets the resized image object.
+     *
+     * @param ResizedImageAbstract $resizedImage
      */
     public function setResizedImage(ResizedImageAbstract $resizedImage)
     {
