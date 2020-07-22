@@ -63,15 +63,13 @@ $config['images'] = array(
 /*=================================== Backends ========================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_backends
 
-$config['backends'][] = array(
-    'name'         => 'default',
-    'adapter'      => 'local',
-    'baseUrl'      => 'https://acromeremote.github.io/ckfinder/userfiles/',
-//  'root'         => '', // Can be used to explicitly set the CKFinder user files directory.
-    'chmodFiles'   => 0777,
-    'chmodFolders' => 0755,
-    'filesystemEncoding' => 'UTF-8',
-);
+ $config['backends'][] = array(
+     'name'         => 'my_dropbox_files',
+     'adapter'      => 'dropbox',
+     'username'     => 'acromeremote@gmail.com',
+     'token'        => 'sl.AeUY2JJnMA89lyxHi-qBv6271lq40hIqB451BBJrHsTy1CWo8DC76em06SJlyHQ-kqOEwEz27wPTBOjavgrTZUVU4-8F0_TtZFSxIik0xQVlRwf0wPhvZHKVPxHW-HnUDI0mtCA',
+     'root'         => '/ckfinder/files'
+ );
 
 /*================================ Resource Types =====================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_resourceTypes
