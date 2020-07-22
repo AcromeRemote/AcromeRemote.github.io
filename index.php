@@ -8,13 +8,8 @@
         <body>
                 <textarea name="editor1"></textarea>
                 <script>
-			CKEDITOR.replace( 'editor1',
-			{
-				filebrowserBrowseUrl		: '/ckfinder/ckfinder.html',
-			     	filebrowserImageBrowseUrl	: '/ckfinder/ckfinder.html?type=Images',
-			     	filebrowserUploadUrl		: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
-			     	filebrowserImageUploadUrl	: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images'
-			});
+			var editor = CKEDITOR.replace( 'editor1' );
+			CKFinder.setupCKEditor( editor );
                 </script>
         </body>
 </html>
