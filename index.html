@@ -3,13 +3,18 @@
                 <meta charset="utf-8">
                 <title>CKEditor</title>
                 <script src="ckeditor/ckeditor.js"></script>
-		<script src="ckfinder/ckfinder.js"></script>
+		<script src="http://remotelabeditor.duckdns.org/AcromeRemote.github.io/ckfinder/ckfinder.js"></script>
         </head>
         <body>
                 <textarea name="editor1"></textarea>
                 <script>
-			CKFinder.setupCKEditor();
-			CKEDITOR.replace( 'editor1' );
+			 CKEDITOR.replace( 'editor1',
+			 {
+			     filebrowserBrowseUrl: 'http://remotelabeditor.duckdns.org/AcromeRemote.github.io/ckfinder/ckfinder.html',
+			     filebrowserImageBrowseUrl: 'http://remotelabeditor.duckdns.org/AcromeRemote.github.io/ckfinder/ckfinder.html?type=Images',
+			     filebrowserUploadUrl: 'http://remotelabeditor.duckdns.org/AcromeRemote.github.io/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+			     filebrowserImageUploadUrl: 'http://remotelabeditor.duckdns.org/AcromeRemote.github.io/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images'
+			 });
                 </script>
         </body>
 </html>
