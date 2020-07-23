@@ -8,13 +8,8 @@
         <body>
                 <textarea name="editor1"></textarea>
                 <script>
-			 CKEDITOR.replace( 'editor1',
-			 {
-			     filebrowserBrowseUrl: 'http://remotelabeditor.duckdns.org/AcromeRemote.github.io/ckfinder/ckfinder.html',
-			     filebrowserImageBrowseUrl: 'http://remotelabeditor.duckdns.org/AcromeRemote.github.io/ckfinder/ckfinder.html?type=Images',
-			     filebrowserUploadUrl: 'http://remotelabeditor.duckdns.org/AcromeRemote.github.io/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
-			     filebrowserImageUploadUrl: 'http://remotelabeditor.duckdns.org/AcromeRemote.github.io/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images'
-			 });
+			var editor = CKEDITOR.replace( 'editor1' );
+			CKFinder.setupCKEditor( editor );
                 </script>
         </body>
 </html>
