@@ -29,14 +29,7 @@
       <br>
     <button class="button" onclick="sendText()">Submit text</button>
   <script>
-    CKEDITOR.replace('editor2', {
-	extraPlugins: 'autogrow,sourcearea,toolbar,undo,wysiwygarea,list,liststyle,format,link,basicstyles,pastefromword', //uploadimage
-	height:500,
-    	language: 'en', 
-    });
-if (CKEDITOR.env.ie && CKEDITOR.env.version == 8) {
-      document.getElementById('ie8-warning').className = 'tip alert';
-    }
+    CKEDITOR.replace("editor2");
   </script>
 </body>
 
